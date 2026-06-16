@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --top-a: {{ color_top_a }};
+      --top-b: {{ color_top_b }};
+      --top-c: {{ color_top_c }};
+      --top-fr: {{ color_top_fr }};
+      --mid-a: {{ color_mid_a }};
+      --mid-b: {{ color_mid_b }};
+      --mid-c: {{ color_mid_c }};
+      --mid-fr: {{ color_mid_fr }};
+      --bot-a: {{ color_bot_a }};
+      --bot-b: {{ color_bot_b }};
+      --bot-c: {{ color_bot_c }};
+      --bot-fr: {{ color_bot_fr }};
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 30%, #1a0a2e 0%, #0d0520 60%, #04010f 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1rem 3rem;
+      color: #fff;
+    }
+
+    /* STARS */
+    .stars { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .star { position: absolute; background: white; border-radius: 50%; animation: twinkle 2s infinite alternate; }
+    @keyframes twinkle { from { opacity: 0.2; } to { opacity: 1; } }
+
+    .content { position: relative; z-index: 1; width: 100%; max-width: 560px; display: flex; flex-direction: column; align-items: center; }
+
+    /* GREETING */
+    .greeting {
+      text-align: center; margin-bottom: 1.5rem;
+    }
+    .greeting h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      color: #ffe082;
+      text-shadow: 0 0 30px rgba(255,176,0,0.7);
+      animation: glowText 2s ease-in-out infinite alternate;
+      line-height: 1.2;
+    }
+    @keyframes glowText {
+      from { text-shadow: 0 0 10px #ffb300; }
+      to   { text-shadow: 0 0 30px #ffe082, 0 0 60px #ffb300; }
+    }
+    .greeting .meta {
+      margin-top: 0.5rem;
+      color: rgba(255,224,130,0.65);
+      font-size: 0.95rem;
+    }
+
+    /* CAKE */
+    .cake-wrap { display: flex; flex-direction: column; align-items: center; position: relative; }
+
+    /* CANDLES */
+    .candles { display: flex; gap: 16px; margin-bottom: 2px; align-items: flex-end; z-index: 10; }
+    .candle-unit { display: flex; flex-direction: column; align-items: center; }
+    .flame-wrap { width: 16px; height: 36px; display: flex; flex-direction: column; align-items: center; margin-bottom: -2px; }
+    .flame-outer {
+      width: 14px; height: 26px;
+      background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffe500 30%, #ff9800 70%, transparent 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: flicker 0.4s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 8px #ffb300) drop-shadow(0 0 16px #ff6f00);
+      position: relative; transition: opacity 0.4s, transform 0.4s;
+    }
+    .flame-inner {
+      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      width: 6px; height: 10px;
+      background: radial-gradient(ellipse at 50% 80%, #fff 0%, #fffde7 60%, transparent 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    }
+    @keyframes flicker {
+      0%   { transform: scaleX(1)    scaleY(1)    rotate(-2deg); }
+      33%  { transform: scaleX(0.88) scaleY(1.08) rotate(1deg); }
+      66%  { transform: scaleX(1.05) scaleY(0.95) rotate(-1deg); }
+      100% { transform: scaleX(0.95) scaleY(1.05) rotate(2deg); }
+    }
+    .candle-body { width: 14px; height: 48px; border-radius: 3px 3px 2px 2px; position: relative; overflow: hidden; }
+    .cd-1 { background: linear-gradient(to right, #e53935, #ff8a80, #ffcdd2, #ef9a9a); }
+    .cd-2 { background: linear-gradient(to right, #283593, #5c6bc0, #c5cae9, #7986cb); }
+    .cd-3 { background: linear-gradient(to right, #2e7d32, #66bb6a, #c8e6c9, #81c784); }
+    .cd-4 { background: linear-gradient(to right, #e65100, #fb8c00, #ffe0b2, #ffb74d); }
+    .cd-5 { background: linear-gradient(to right, #6a1b9a, #ab47bc, #e1bee7, #ce93d8); }
+    .candle-stripe {
+      position: absolute; top: 8px; left: 0; right: 0; height: 4px;
+      background: rgba(255,255,255,0.35);
+      box-shadow: 0 16px 0 rgba(255,255,255,0.2), 0 30px 0 rgba(255,255,255,0.15);
+    }
+    .wick { width: 2px; height: 6px; background: #444; border-radius: 1px; }
+
+    /* TIERS */
+    .cake-wrap { display: flex; flex-direction: column; align-items: center; position: relative; }
+
+    .frosting { position: absolute; top: -16px; left: 0; right: 0; height: 28px; z-index: 5; pointer-events: none; }
+    .frosting svg { width: 100%; height: 100%; display: block; }
+
+    /* TOP TIER — 200px wide */
+    .tier-top { width: 200px; position: relative; display: flex; flex-direction: column; align-items: center; }
+    .tier-top-body {
+      width: 200px; height: 60px; border-radius: 8px 8px 0 0; position: relative;
+      background: linear-gradient(to right, var(--top-a), var(--top-b), var(--top-c), var(--top-b), var(--top-a));
+    }
+    .tier-top-decos { position: absolute; bottom: 6px; width: 100%; display: flex; justify-content: space-around; padding: 0 10px; }
+    .tier-top-base { width: 200px; height: 10px; border-radius: 0 0 6px 6px; background: linear-gradient(to right, var(--top-a), var(--top-b), var(--top-c), var(--top-b), var(--top-a)); filter: brightness(0.7); }
+
+    /* MID TIER — 270px wide */
+    .tier-mid { width: 270px; position: relative; display: flex; flex-direction: column; align-items: center; }
+    .tier-mid-body {
+      width: 270px; height: 80px; position: relative;
+      background: linear-gradient(to right, var(--mid-a), var(--mid-b), var(--mid-c), var(--mid-b), var(--mid-a));
+    }
+    .pearl-row { display: flex; justify-content: space-around; padding: 0 14px; position: absolute; top: 12px; width: 100%; }
+    .pearl { width: 10px; height: 10px; background: radial-gradient(circle at 35% 35%, #fff 0%, #ffe082 50%, #ffb300 100%); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+    .tier-mid-decos { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: space-around; padding: 0 20px; }
+    .tier-mid-base { width: 270px; height: 12px; border-radius: 0 0 6px 6px; background: linear-gradient(to right, var(--mid-a), var(--mid-b), var(--mid-c), var(--mid-b), var(--mid-a)); filter: brightness(0.7); }
+
+    /* BOTTOM TIER — 340px wide */
+    .tier-bot { width: 340px; position: relative; display: flex; flex-direction: column; align-items: center; }
+    .tier-bot-body {
+      width: 340px; height: 100px; position: relative; overflow: hidden;
+      background: linear-gradient(to right, var(--bot-a), var(--bot-b), var(--bot-c), var(--bot-b), var(--bot-a));
+    }
+    .diamond-row { display: flex; justify-content: space-around; align-items: center; position: absolute; width: 100%; top: 22px; }
+    .diamond { width: 14px; height: 14px; background: linear-gradient(135deg, #fff 0%, #ffe082 50%, #ffb300 100%); transform: rotate(45deg); box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .tier-bot-decos { position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: space-around; padding: 0 24px; }
+    .tier-bot-base { width: 340px; height: 16px; border-radius: 0 0 8px 8px; background: linear-gradient(to right, var(--bot-a), var(--bot-b), var(--bot-c), var(--bot-b), var(--bot-a)); filter: brightness(0.65); }
+
+    /* PLATE */
+    .plate {
+      width: 390px; height: 22px;
+      background: linear-gradient(to bottom, #e0e0e0, #ffffff 40%, #bdbdbd);
+      border-radius: 50%; box-shadow: 0 6px 18px rgba(0,0,0,0.5); position: relative;
+    }
+    .plate::after {
+      content: ''; position: absolute; top: 3px; left: 20px; right: 20px; height: 8px;
+      border-radius: 50%; background: linear-gradient(to bottom, rgba(255,255,255,0.9), transparent);
+    }
+    .cake-glow { width: 280px; height: 20px; margin-top: -4px; background: radial-gradient(ellipse, rgba(255,200,50,0.35) 0%, transparent 70%); }
+
+    /* WISH PANEL */
+    #wishPanel {
+      margin-top: 1.75rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,224,130,0.25);
+      border-radius: 16px;
+      padding: 1.5rem;
+      width: 100%; max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    #wishPanel h3 {
+      font-family: 'Playfair Display', serif;
+      color: #ffe082;
+      font-size: 1.15rem;
+      margin-bottom: 0.35rem;
+    }
+    #wishPanel p { color: rgba(255,224,130,0.6); font-size: 0.85rem; margin-bottom: 1rem; }
+
+    #wishText {
+      width: 100%; min-height: 80px; padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,224,130,0.3);
+      border-radius: 10px; color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      resize: vertical; outline: none;
+      transition: border-color 0.2s;
+    }
+    #wishText::placeholder { color: rgba(255,255,255,0.3); }
+    #wishText:focus { border-color: #ffe082; }
+
+    /* BUTTONS */
+    .btn-row { display: flex; gap: 12px; margin-top: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 22px; border-radius: 24px; border: 2px solid #ffe082;
+      background: rgba(255,224,130,0.1); color: #ffe082;
+      font-size: 0.95rem; font-weight: 600; font-family: 'Inter', sans-serif;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.4px;
+    }
+    .btn:hover { background: rgba(255,224,130,0.25); transform: scale(1.04); }
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+      filter: grayscale(0.4);
+    }
+    .btn-secondary { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.6); color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* WISH DISPLAY */
+    #wishDisplay {
+      display: none;
+      margin-top: 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,224,130,0.2);
+      border-radius: 14px; padding: 1.2rem 1.5rem;
+      text-align: center; max-width: 400px; width: 100%;
+      animation: fadeIn 0.6s ease;
+    }
+    #wishDisplay .wish-label { color: rgba(255,224,130,0.6); font-size: 0.8rem; margin-bottom: 0.4rem; }
+    #wishDisplay .wish-text { color: #ffe082; font-style: italic; font-size: 1rem; line-height: 1.5; }
+
+    .msg { color: rgba(255,224,130,0.9); font-size: 1rem; margin-top: 1rem; min-height: 22px; text-align: center; font-weight: 500; }
+
+    .back-link { margin-top: 2rem; }
+    .back-link a { color: rgba(255,224,130,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .back-link a:hover { color: #ffe082; }
+
+    @keyframes sparkleAnim {
+      0%   { transform: scale(0) translateY(0); opacity: 1; }
+      100% { transform: scale(1.5) translateY(-70px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="content">
+
+  <!-- GREETING -->
+  <div class="greeting">
+    <h1>🎂 Happy Birthday, {{ name }}! 🎂</h1>
+    <p class="meta">Age {{ age }} &nbsp;·&nbsp; {{ gender }}</p>
+  </div>
+
+  <!-- CAKE -->
+  <div class="cake-wrap">
+
+    <!-- CANDLES -->
+    <div class="candles" id="candles">
+      <div class="candle-unit">
+        <div class="flame-wrap"><div class="flame-outer" id="f1" style="animation-delay:0s"><div class="flame-inner"></div></div></div>
+        <div class="wick"></div><div class="candle-body cd-1"><div class="candle-stripe"></div></div>
+      </div>
+      <div class="candle-unit">
+        <div class="flame-wrap"><div class="flame-outer" id="f2" style="animation-delay:0.1s"><div class="flame-inner"></div></div></div>
+        <div class="wick"></div><div class="candle-body cd-2"><div class="candle-stripe"></div></div>
+      </div>
+      <div class="candle-unit">
+        <div class="flame-wrap"><div class="flame-outer" id="f3" style="animation-delay:0.2s"><div class="flame-inner"></div></div></div>
+        <div class="wick"></div><div class="candle-body cd-3"><div class="candle-stripe"></div></div>
+      </div>
+      <div class="candle-unit">
+        <div class="flame-wrap"><div class="flame-outer" id="f4" style="animation-delay:0.05s"><div class="flame-inner"></div></div></div>
+        <div class="wick"></div><div class="candle-body cd-4"><div class="candle-stripe"></div></div>
+      </div>
+      <div class="candle-unit">
+        <div class="flame-wrap"><div class="flame-outer" id="f5" style="animation-delay:0.15s"><div class="flame-inner"></div></div></div>
+        <div class="wick"></div><div class="candle-body cd-5"><div class="candle-stripe"></div></div>
+      </div>
+    </div>
+
+    <!-- TOP TIER -->
+    <div class="tier-top">
+      <div class="frosting">
+        <svg viewBox="0 0 200 28" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,8 C10,0 20,18 30,8 C40,0 50,18 60,8 C70,0 80,18 90,8 C100,0 110,18 120,8 C130,0 140,18 150,8 C160,0 170,18 180,8 C190,0 198,14 200,10 L200,28 L0,28 Z" fill="var(--top-fr)" opacity="0.9"/>
+          <path d="M0,12 C10,4 20,22 30,12 C40,4 50,22 60,12 C70,4 80,22 90,12 C100,4 110,22 120,12 C130,4 140,22 150,12 C160,4 170,22 180,12 C190,4 198,18 200,14 L200,28 L0,28 Z" fill="white" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="tier-top-body">
+        <div class="tier-top-decos">
+          <span>🌸</span><span>💖</span><span>🌸</span><span>💖</span><span>🌸</span>
+        </div>
+      </div>
+      <div class="tier-top-base"></div>
+    </div>
+
+    <!-- MID TIER -->
+    <div class="tier-mid">
+      <div class="frosting">
+        <svg viewBox="0 0 270 28" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,8 C13,0 26,18 39,8 C52,0 65,18 78,8 C91,0 104,18 117,8 C130,0 143,18 156,8 C169,0 182,18 195,8 C208,0 221,18 234,8 C247,0 260,14 270,10 L270,28 L0,28 Z" fill="var(--mid-fr)" opacity="0.9"/>
+          <path d="M0,13 C13,5 26,22 39,13 C52,5 65,22 78,13 C91,5 104,22 117,13 C130,5 143,22 156,13 C169,5 182,22 195,13 C208,5 221,22 234,13 C247,5 260,18 270,15 L270,28 L0,28 Z" fill="white" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="tier-mid-body">
+        <div class="pearl-row">
+          <div class="pearl"></div><div class="pearl"></div><div class="pearl"></div>
+          <div class="pearl"></div><div class="pearl"></div><div class="pearl"></div>
+          <div class="pearl"></div><div class="pearl"></div>
+        </div>
+        <div class="tier-mid-decos">
+          <span>⭐</span><span>✨</span><span>⭐</span><span>✨</span><span>⭐</span>
+        </div>
+      </div>
+      <div class="tier-mid-base"></div>
+    </div>
+
+    <!-- BOTTOM TIER -->
+    <div class="tier-bot">
+      <div class="frosting">
+        <svg viewBox="0 0 340 28" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,8 C14,0 28,18 42,8 C56,0 70,18 84,8 C98,0 112,18 126,8 C140,0 154,18 168,8 C182,0 196,18 210,8 C224,0 238,18 252,8 C266,0 280,18 294,8 C308,0 322,16 340,10 L340,28 L0,28 Z" fill="var(--bot-fr)" opacity="0.9"/>
+          <path d="M0,13 C14,5 28,22 42,13 C56,5 70,22 84,13 C98,5 112,22 126,13 C140,5 154,22 168,13 C182,5 196,22 210,13 C224,5 238,22 252,13 C266,5 280,22 294,13 C308,5 322,20 340,15 L340,28 L0,28 Z" fill="white" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="tier-bot-body">
+        <div class="diamond-row">
+          <div class="diamond"></div><div class="diamond"></div><div class="diamond"></div>
+          <div class="diamond"></div><div class="diamond"></div><div class="diamond"></div>
+          <div class="diamond"></div><div class="diamond"></div><div class="diamond"></div>
+        </div>
+        <div class="tier-bot-decos">
+          <span>🌟</span><span>🎉</span><span>🌟</span><span>🎉</span><span>🌟</span><span>🎉</span><span>🌟</span>
+        </div>
+      </div>
+      <div class="tier-bot-base"></div>
+    </div>
+
+    <div class="plate"></div>
+    <div class="cake-glow"></div>
+  </div>
+
+  <!-- WISH PANEL (shown before blowing) -->
+  <div id="wishPanel">
+    <h3>✨ Make Your Birthday Wish!</h3>
+    <p>Write your wish, click <strong style="color:#ffe082;">Finished Wish</strong>, then blow the candles 🕯️</p>
+    <textarea id="wishText" placeholder="I wish for..."></textarea>
+    <div class="btn-row">
+      <button class="btn btn-secondary" id="finishedWishBtn" onclick="finishWish()">✅ Finished Wish</button>
+      <button class="btn" id="blowBtn" onclick="blowCandles()" disabled>🌬️ Blow Candles!</button>
+    </div>
+  </div>
+
+  <!-- WISH DISPLAY (shown after blowing) -->
+  <div id="wishDisplay">
+    <div class="wish-label">✨ Your Birthday Wish</div>
+    <div class="wish-text" id="wishContent"></div>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <div class="btn-row" id="afterBlow" style="display:none;">
+    <button class="btn" onclick="relightCandles()">🔥 Relight Candles</button>
+    <a href="/" style="text-decoration:none;"><button class="btn btn-secondary">← New Cake</button></a>
+  </div>
+
+  <div class="back-link">
+    <a href="/">← Make another cake</a>
+  </div>
+
+</div>
+
+<script>
+  /* Stars */
+  (function() {
+    const s = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.className = 'star';
+      const sz = Math.random() * 2.5 + 0.5;
+      el.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2}s`;
+      s.appendChild(el);
+    }
+  })();
+
+  let blown = false;
+
+  function finishWish() {
+    // Enable blow button and hide the finished wish button
+    const blowBtn = document.getElementById('blowBtn');
+    const finishedBtn = document.getElementById('finishedWishBtn');
+    blowBtn.disabled = false;
+    finishedBtn.style.display = 'none';
+  }
+
+  function blowCandles() {
+    if (blown) return;
+    const wish = document.getElementById('wishText').value.trim();
+
+    blown = true;
+    const flames = document.querySelectorAll('.flame-outer');
+    flames.forEach((f, i) => {
+      setTimeout(() => {
+        f.style.opacity = '0';
+        f.style.transform = 'scaleY(0)';
+      }, i * 130);
+    });
+
+    setTimeout(() => {
+      document.getElementById('wishPanel').style.display = 'none';
+
+      if (wish) {
+        document.getElementById('wishContent').textContent = '"' + wish + '"';
+        document.getElementById('wishDisplay').style.display = 'block';
+      }
+
+      document.getElementById('msg').textContent = '🎊 Happy Birthday, {{ name }}! May all your wishes come true! 🎊';
+      document.getElementById('afterBlow').style.display = 'flex';
+      spawnConfetti();
+    }, 900);
+  }
+
+  function relightCandles() {
+    blown = false;
+    const flames = document.querySelectorAll('.flame-outer');
+    flames.forEach((f, i) => {
+      setTimeout(() => {
+        f.style.opacity = '1';
+        f.style.transform = '';
+      }, i * 100);
+    });
+    // Reset wish panel state
+    document.getElementById('blowBtn').disabled = true;
+    document.getElementById('finishedWishBtn').style.display = 'inline-flex';
+    document.getElementById('wishPanel').style.display = 'block';
+    document.getElementById('wishDisplay').style.display = 'none';
+    document.getElementById('wishText').value = '';
+    document.getElementById('msg').textContent = '';
+    document.getElementById('afterBlow').style.display = 'none';
+  }
+
+  function spawnConfetti() {
+    const body = document.body;
+    const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6bff','#ffe082','#f06292','#80cbc4'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      const sz = 5 + Math.random() * 7;
+      el.style.cssText = `
+        position:fixed; width:${sz}px; height:${sz}px;
+        border-radius:${Math.random()>0.5?'50%':'3px'};
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        top:${20+Math.random()*40}%; left:${Math.random()*100}%;
+        pointer-events:none; z-index:999;
+        animation:sparkleAnim ${1+Math.random()*1.5}s ease-out forwards;
+        animation-delay:${Math.random()*0.7}s;
+      `;
+      body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+  }
+</script>
+
+</body>
+</html>

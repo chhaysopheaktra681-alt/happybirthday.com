@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Cake Generator</title>
+  <link rel="stylesheet" href="/static/style/css/form.css">
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="card">
+      <div class="card-header">
+        <div class="emoji-top">🎂</div>
+        <h2>Birthday Cake Generator</h2>
+        <p class="subtitle">Fill in your details and choose your cake colors</p>
+      </div>
+
+      <form action="/cake" method="POST" id="birthdayForm">
+
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="e.g. Sopheaktra" required>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Your Age</label>
+          <input type="number" id="age" name="age" min="1" max="120" placeholder="e.g. 21" required>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Your Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- COLOR PICKER SECTION -->
+        <div class="color-section">
+          <label class="color-section-title">Choose Your Cake Colors</label>
+          <p class="color-hint">Pick a color theme for each tier of your cake</p>
+
+          <div class="tier-colors">
+
+            <div class="tier-color-group">
+              <span class="tier-label">🎂 Top Tier</span>
+              <div class="color-swatches" data-tier="top">
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_top" value="pink" checked>
+                  <span class="swatch" style="background:linear-gradient(135deg,#f06292,#e91e8c)" title="Pink"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_top" value="purple">
+                  <span class="swatch" style="background:linear-gradient(135deg,#ab47bc,#7b1fa2)" title="Purple"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_top" value="red">
+                  <span class="swatch" style="background:linear-gradient(135deg,#ef5350,#b71c1c)" title="Red"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_top" value="teal">
+                  <span class="swatch" style="background:linear-gradient(135deg,#26c6da,#00838f)" title="Teal"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_top" value="gold">
+                  <span class="swatch" style="background:linear-gradient(135deg,#ffd54f,#f57f17)" title="Gold"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="tier-color-group">
+              <span class="tier-label">🍰 Middle Tier</span>
+              <div class="color-swatches" data-tier="mid">
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_mid" value="blue" checked>
+                  <span class="swatch" style="background:linear-gradient(135deg,#42a5f5,#1565c0)" title="Blue"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_mid" value="green">
+                  <span class="swatch" style="background:linear-gradient(135deg,#66bb6a,#2e7d32)" title="Green"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_mid" value="indigo">
+                  <span class="swatch" style="background:linear-gradient(135deg,#7986cb,#283593)" title="Indigo"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_mid" value="cyan">
+                  <span class="swatch" style="background:linear-gradient(135deg,#4dd0e1,#006064)" title="Cyan"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_mid" value="rose">
+                  <span class="swatch" style="background:linear-gradient(135deg,#f48fb1,#ad1457)" title="Rose"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="tier-color-group">
+              <span class="tier-label">🎁 Bottom Tier</span>
+              <div class="color-swatches" data-tier="bot">
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_bot" value="orange" checked>
+                  <span class="swatch" style="background:linear-gradient(135deg,#ff8a50,#e64a19)" title="Orange"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_bot" value="amber">
+                  <span class="swatch" style="background:linear-gradient(135deg,#ffd54f,#e65100)" title="Amber"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_bot" value="brown">
+                  <span class="swatch" style="background:linear-gradient(135deg,#a1887f,#4e342e)" title="Brown"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_bot" value="lime">
+                  <span class="swatch" style="background:linear-gradient(135deg,#d4e157,#827717)" title="Lime"></span>
+                </label>
+                <label class="swatch-wrap">
+                  <input type="radio" name="color_bot" value="magenta">
+                  <span class="swatch" style="background:linear-gradient(135deg,#f06292,#880e4f)" title="Magenta"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- END COLOR SECTION -->
+
+        <button type="submit">🎂 Generate My Birthday Cake!</button>
+
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

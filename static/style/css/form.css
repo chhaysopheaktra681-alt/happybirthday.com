@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, #1a0a2e 0%, #0d0520 50%, #04010f 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Inter', sans-serif;
+  padding: 2rem 1rem;
+}
+
+.page-wrap {
+  width: 100%; max-width: 520px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,224,130,0.2);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.card-header { text-align: center; margin-bottom: 2rem; }
+
+.emoji-top {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #ffe082;
+  text-shadow: 0 0 20px rgba(255,176,0,0.5);
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  color: rgba(255,224,130,0.6);
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  color: #ffe082;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,224,130,0.25);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.form-group input::placeholder { color: rgba(255,255,255,0.3); }
+.form-group select option { background: #1a0a2e; color: #fff; }
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #ffe082;
+  background: rgba(255,224,130,0.1);
+}
+
+/* COLOR SECTION */
+.color-section {
+  margin: 1.5rem 0 1.75rem;
+  padding: 1.25rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,224,130,0.15);
+  border-radius: 14px;
+}
+
+.color-section-title {
+  display: block;
+  color: #ffe082;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+
+.color-hint {
+  color: rgba(255,224,130,0.5);
+  font-size: 0.8rem;
+  margin-bottom: 1.1rem;
+}
+
+.tier-colors { display: flex; flex-direction: column; gap: 1rem; }
+
+.tier-color-group { display: flex; align-items: center; gap: 1rem; }
+
+.tier-label {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.8rem;
+  font-weight: 500;
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.color-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.swatch-wrap { cursor: pointer; }
+.swatch-wrap input[type="radio"] { display: none; }
+
+.swatch {
+  display: block;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.swatch-wrap input[type="radio"]:checked + .swatch {
+  border-color: #ffe082;
+  transform: scale(1.2);
+  box-shadow: 0 0 12px rgba(255,224,130,0.6);
+}
+
+.swatch:hover { transform: scale(1.1); }
+
+/* SUBMIT BUTTON */
+button[type="submit"] {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 2px solid #ffe082;
+  background: rgba(255,224,130,0.12);
+  color: #ffe082;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+button[type="submit"]:hover {
+  background: rgba(255,224,130,0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,224,130,0.2);
+}
+
+button[type="submit"]:active { transform: translateY(0); }
+
+@media (max-width: 480px) {
+  .card { padding: 1.75rem 1.25rem; }
+  .tier-color-group { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .tier-label { width: auto; }
+}
