@@ -1,6 +1,14 @@
+import os
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+# Explicit paths so Vercel can find templates and static files
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates", "front"),
+    static_folder=os.path.join(BASE_DIR, "static"),
+)
 
 # Color palette maps for each tier choice
 COLOR_MAP = {
@@ -27,7 +35,7 @@ COLOR_MAP = {
 
 @app.route("/", methods=["GET"])
 def form():
-    return render_template("front/form.html")
+    return render_template("form.html")
 
 
 @app.route("/cake", methods=["POST"])
@@ -45,7 +53,7 @@ def cake():
     bot = COLOR_MAP.get(color_bot, COLOR_MAP["orange"])
 
     return render_template(
-        "front/cake.html",
+        "cake.html",
         name=name,
         age=age,
         gender=gender,
